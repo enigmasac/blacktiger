@@ -47,8 +47,6 @@ export default function ProductDetail({ product }: { product: WCProduct }) {
       },
       qty
     );
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
   };
 
   const currentPrice = parseFloat(product.sale_price || product.price);
