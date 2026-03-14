@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BlackTiger - E-commerce Next.js
 
-## Getting Started
+E-commerce headless para BlackTiger (productos para cuidado de tatuajes). Next.js 14 + WooCommerce API + MercadoPago.
 
-First, run the development server:
+## Desarrollo local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Crear `.env.local`:
+```
+WC_URL=https://blacktiger.pe
+WC_CONSUMER_KEY=ck_xxx
+WC_CONSUMER_SECRET=cs_xxx
+NEXT_PUBLIC_SITE_URL=https://blacktiger.pe
+MERCADOPAGO_PUBLIC_KEY=APP_USR_xxx
+MERCADOPAGO_ACCESS_TOKEN=APP_USR_xxx
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Servidor de produccion
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**IP:** 37.187.151.76
+**Usuario:** debian
+**Llave SSH:** `~/.ssh/serverenigma.pem`
 
-## Learn More
+```bash
+ssh -i ~/.ssh/serverenigma.pem debian@37.187.151.76
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Ruta:** `/home/blacktiger/app/`
+**Container:** `blacktiger-web`
+**Puerto:** `127.0.0.1:4070 -> 3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd /home/blacktiger/app
+sudo git pull origin main
+sudo docker compose build --no-cache && sudo docker compose up -d
+```
 
-## Deploy on Vercel
+### Logs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+sudo docker logs -f blacktiger-web
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### WordPress
+
+WordPress sigue en `/home/blacktiger/public_html/`. Apache enruta:
+- `/wp-admin`, `/wp-json`, `/wp-content`, `/wp-login.php` → WordPress (PHP)
+- Todo lo demas → Next.js (Docker container)
+
+Config Apache: `/etc/apache2/sites-available/blacktiger.pe.conf`
