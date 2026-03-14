@@ -113,3 +113,62 @@ export async function getCouponByCode(code: string) {
   const coupons = await wcFetch<WCCoupon[]>(`/coupons?code=${encodeURIComponent(code)}`);
   return coupons[0] || null;
 }
+
+export type WCCustomerBilling = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  address_1: string;
+  city: string;
+  state: string;
+  country: string;
+};
+
+export type WCCustomer = {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  billing: WCCustomerBilling;
+};
+
+export type WCOrderFull = {
+  id: number;
+  number: string;
+  status: string;
+  total: string;
+  currency: string;
+  date_created: string;
+  line_items: { name: string; quantity: number; total: string }[];
+};
+
+export async function createCustomer(data: {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+}) {
+  return wcFetch<WCCustomer>("/customers", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getCustomerById(id: number) {
+  return wcFetch<WCCustomer>(`/customers/${id}`);
+}
+
+export async function updateCustomer(
+  id: number,
+  data: Partial<Pick<WCCustomer, "first_name" | "last_name"> & { billing: Partial<WCCustomerBilling> }>
+) {
+  return wcFetch<WCCustomer>(`/customers/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function getCustomerOrders(customerId: number) {
+  return wcFetch<WCOrderFull[]>(`/orders?customer=${customerId}&per_page=20&orderby=date&order=desc`);
+}

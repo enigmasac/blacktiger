@@ -5,9 +5,10 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { useCartStore } from "@/store/cart";
 import { useRouter } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import UbigeoSelector from "@/components/UbigeoSelector";
 import type { ShippingMethod, UbigeoSelection } from "@/lib/ubigeo";
+import { useAuthStore } from "@/store/auth";
 
 export default function CheckoutPage() {
   const items = useCartStore((s) => s.items);
@@ -17,6 +18,7 @@ export default function CheckoutPage() {
   );
   const clearCart = useCartStore((s) => s.clearCart);
   const router = useRouter();
+  const authUser = useAuthStore((s) => s.user);
   const [loading, setLoading] = useState(false);
 
   const discount = couponData?.discount || 0;
@@ -34,6 +36,27 @@ export default function CheckoutPage() {
     ruc: "",
     razonSocial: "",
   });
+
+  useEffect(() => {
+    if (authUser) {
+      fetch("/api/account/profile")
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (data?.customer) {
+            const c = data.customer;
+            setForm((prev) => ({
+              ...prev,
+              firstName: c.first_name || prev.firstName,
+              lastName: c.last_name || prev.lastName,
+              email: c.billing?.email || c.email || prev.email,
+              phone: c.billing?.phone || prev.phone,
+              address: c.billing?.address_1 || prev.address,
+            }));
+          }
+        })
+        .catch(() => {});
+    }
+  }, [authUser]);
 
   const [ubigeo, setUbigeo] = useState<UbigeoSelection | null>(null);
   const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([]);

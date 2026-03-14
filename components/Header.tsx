@@ -59,6 +59,21 @@ export default function Header() {
         <div className="hidden items-center gap-4 lg:flex">
           <div className="h-6 w-px bg-gray-200" />
 
+          <Link href="/mi-cuenta" className="group text-primary transition-colors hover:text-peach">
+            <svg
+              className="h-6 w-6 transition-transform group-hover:scale-110"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </Link>
+
           <Link href="/carrito" className="group relative text-primary transition-colors hover:text-peach">
             <svg
               className="h-6 w-6 transition-transform group-hover:scale-110"

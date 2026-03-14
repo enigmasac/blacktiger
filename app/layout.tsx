@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Roboto_Slab, Raleway } from "next/font/google";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -46,9 +47,11 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${robotoSlab.variable} ${raleway.variable} font-roboto antialiased`}
       >
-        {children}
-        <WhatsAppButton />
-        <MobileBottomNav />
+        <AuthProvider>
+          {children}
+          <WhatsAppButton />
+          <MobileBottomNav />
+        </AuthProvider>
       </body>
     </html>
   );

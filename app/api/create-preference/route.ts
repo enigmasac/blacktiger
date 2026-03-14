@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrder } from "@/lib/woocommerce";
+import { getSession } from "@/lib/session";
 import type { CartProduct } from "@/store/cart";
 
 export async function POST(request: NextRequest) {
@@ -34,7 +35,10 @@ export async function POST(request: NextRequest) {
     } | null;
   };
 
+  const session = await getSession();
+
   const orderPayload: Record<string, unknown> = {
+    ...(session && { customer_id: session.customerId }),
     payment_method: "mercadopago",
     payment_method_title: "MercadoPago",
     set_paid: false,
