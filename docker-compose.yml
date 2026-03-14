@@ -1,14 +1,9 @@
 services:
   web:
     build: .
+    container_name: blacktiger-web
+    restart: unless-stopped
     ports:
-      - "3002:3000"
+      - "127.0.0.1:4070:3000"
     env_file:
       - .env.local
-    volumes:
-      - ./app:/app/app
-      - ./components:/app/components
-      - ./lib:/app/lib
-      - ./store:/app/store
-      - ./public:/app/public
-      - ./tailwind.config.ts:/app/tailwind.config.ts
