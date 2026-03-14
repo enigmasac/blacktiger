@@ -1,3 +1,5 @@
+name: blacktiger
+
 services:
   web:
     build: .
