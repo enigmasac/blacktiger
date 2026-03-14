@@ -2,7 +2,12 @@ name: blacktiger
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        WC_URL: ${WC_URL}
+        WC_CONSUMER_KEY: ${WC_CONSUMER_KEY}
+        WC_CONSUMER_SECRET: ${WC_CONSUMER_SECRET}
     container_name: blacktiger-web
     restart: unless-stopped
     ports:
