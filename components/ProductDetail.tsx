@@ -30,7 +30,6 @@ const TRUST_BADGES = [
 export default function ProductDetail({ product }: { product: WCProduct }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [lightbox, setLightbox] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
