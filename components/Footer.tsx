@@ -3,6 +3,7 @@ import Image from "next/image";
 
 const EXTRA_LINKS = [
   { label: "¿Quieres ser distribuidor?", href: "/distribuidores" },
+  { label: "Solicitud de patrocinio", href: "/solicitud-de-patrocinio" },
   { label: "Preguntas frecuentes", href: "/preguntas-frecuentes" },
   { label: "Libro de reclamaciones", href: "/libro-reclamaciones" },
 ];
