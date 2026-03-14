@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   title: "BlackTiger - Productos para el cuidado de tatuajes",
   description:
     "La mejor línea de productos para el cuidado de tu tatuaje. Sin siliconas, sin parabenos, ingredientes naturales.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "BlackTiger",
     description: "Productos para el cuidado de tatuajes",
@@ -34,6 +38,14 @@ export const metadata: Metadata = {
     siteName: "BlackTiger",
     locale: "es_PE",
     type: "website",
+    images: [
+      {
+        url: "https://blacktiger.pe/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "BlackTiger - Tattoo Care Products",
+      },
+    ],
   },
 };
 
