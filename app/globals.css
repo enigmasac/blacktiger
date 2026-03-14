@@ -1,0 +1,452 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #1A1A1A;
+  --peach: #FFBC7D;
+  --primary: #111111;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+/* ── Scroll-triggered animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* ── Stagger delays ── */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* ── Hero entrance ── */
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-line {
+  from { width: 0; }
+  to { width: 80px; }
+}
+
+@keyframes hero-fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-reveal {
+  animation: hero-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hero-line {
+  animation: hero-line 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.animate-hero-fade-down {
+  animation: hero-fade-down 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Floating WhatsApp ── */
+@keyframes float-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float-bounce 3s ease-in-out infinite;
+}
+
+.animate-pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: #25D366;
+  animation: pulse-ring 2s ease-out infinite;
+  z-index: -1;
+}
+
+/* ── Button shine effect ── */
+@keyframes btn-shine {
+  from { left: -100%; }
+  to { left: 200%; }
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: none;
+}
+
+.btn-shine:hover::after {
+  animation: btn-shine 0.6s ease;
+}
+
+/* ── Noise texture overlay ── */
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Tiger stripe accent ── */
+.tiger-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(255, 188, 125, 0.06) 8px,
+    rgba(255, 188, 125, 0.06) 16px
+  );
+}
+
+/* ── Gradient text ── */
+.text-gradient-peach {
+  background: linear-gradient(135deg, #FFBC7D, #FFA6A6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Card glow on hover ── */
+.card-glow {
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.card-glow:hover {
+  box-shadow: 0 8px 30px rgba(255, 188, 125, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* ── Swirl animation for badges ── */
+@keyframes swirl-in {
+  from {
+    opacity: 0;
+    transform: rotateX(90deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes swirl-out {
+  from {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: rotateX(-90deg) scale(0.8);
+  }
+}
+
+/* ── Smooth image zoom ── */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* ── Underline draw effect for links ── */
+.link-draw {
+  position: relative;
+}
+
+.link-draw::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--peach);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.link-draw:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ── Add to Cart Button (GSAP animated) ── */
+.atc-btn {
+  --atc-bg: #111111;
+  --atc-bg-hover: #000000;
+  --atc-bg-scale: 1;
+  --atc-text-o: 1;
+  --atc-text-x: 12px;
+  --atc-cart: #fff;
+  --atc-cart-x: -48px;
+  --atc-cart-y: 0px;
+  --atc-cart-rotate: 0deg;
+  --atc-cart-scale: .75;
+  --atc-cart-clip: 0px;
+  --atc-cart-clip-x: 0px;
+  --atc-tick-offset: 10px;
+  --atc-tick-color: #FFBC7D;
+  --atc-shirt-y: -16px;
+  --atc-shirt-scale: 0;
+  --atc-shirt-color: #111111;
+  --atc-shirt-logo: #fff;
+  --atc-shirt-second-y: 24px;
+  --atc-shirt-second-color: #fff;
+  --atc-shirt-second-logo: #111111;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  outline: none;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  width: 164px;
+  margin: 0;
+  cursor: pointer;
+  position: relative;
+  font-family: inherit;
+}
+
+.atc-btn::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 12px;
+  transition: background 0.25s;
+  background: var(--atc-bg);
+  transform: scaleX(var(--atc-bg-scale)) translateZ(0);
+}
+
+.atc-btn:not(.atc-active):hover {
+  --atc-bg: var(--atc-bg-hover);
+}
+
+.atc-btn .atc-label {
+  display: block;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #fff;
+  opacity: var(--atc-text-o);
+  transform: translateX(var(--atc-text-x)) translateZ(0);
+  white-space: nowrap;
+}
+
+.atc-btn svg {
+  display: block;
+  position: relative;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.atc-btn svg path {
+  fill: none;
+  stroke: none;
+  stroke-width: 2;
+}
+
+.atc-btn .atc-shirt,
+.atc-btn .atc-cart {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+}
+
+.atc-btn .atc-shirt {
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  top: 0;
+  transform-origin: 50% 100%;
+  transform: translateY(var(--atc-shirt-y)) scale(var(--atc-shirt-scale));
+}
+
+.atc-btn .atc-shirt svg {
+  width: 24px;
+  height: 24px;
+}
+
+.atc-btn .atc-shirt svg > path {
+  fill: var(--atc-shirt-color);
+}
+
+.atc-btn .atc-shirt svg g path {
+  fill: var(--atc-shirt-logo);
+}
+
+.atc-btn .atc-shirt svg.atc-second {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.atc-btn .atc-shirt svg.atc-second > path {
+  fill: var(--atc-shirt-second-color);
+}
+
+.atc-btn .atc-shirt svg.atc-second g path {
+  fill: var(--atc-shirt-second-logo);
+}
+
+.atc-btn .atc-shirt svg.atc-second {
+  clip-path: polygon(0 var(--atc-shirt-second-y), 24px var(--atc-shirt-second-y), 24px 24px, 0 24px);
+}
+
+.atc-btn .atc-cart {
+  top: 10px;
+  margin-left: -18px;
+  transform: translate(var(--atc-cart-x), var(--atc-cart-y)) rotate(var(--atc-cart-rotate)) scale(var(--atc-cart-scale)) translateZ(0);
+}
+
+.atc-btn .atc-cart svg {
+  width: 36px;
+  height: 26px;
+}
+
+.atc-btn .atc-cart svg path {
+  stroke: var(--atc-cart);
+}
+
+.atc-btn .atc-cart::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 12px;
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  background: var(--atc-cart);
+  clip-path: polygon(0 0, 22px 0, calc(22px - var(--atc-cart-clip-x)) var(--atc-cart-clip), var(--atc-cart-clip-x) var(--atc-cart-clip));
+}
+
+.atc-btn .atc-cart .atc-wheel {
+  stroke-width: 1.5;
+}
+
+.atc-btn .atc-cart .atc-tick {
+  stroke: var(--atc-tick-color);
+  stroke-dasharray: 10px;
+  stroke-dashoffset: var(--atc-tick-offset);
+}
+
+.atc-btn.atc-wide {
+  width: 100%;
+}
+
+.atc-btn.atc-wide .atc-label {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+@keyframes bounce-short {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+  50% { transform: translateY(-2px); }
+  70% { transform: translateY(-5px); }
+}
+
+.animate-bounce-short {
+  animation: bounce-short 0.5s ease-out;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
